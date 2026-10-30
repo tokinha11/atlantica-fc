@@ -5,7 +5,7 @@ export interface Player {
   cardImage: string;
 }
 
-export type FormationKey = "3-1-4-2" | "4-3-3" | "4-2-3-1";
+export type FormationKey = "3-1-4-2" | "3-4-1-2" | "4-3-3" | "4-2-3-1";
 
 export interface PitchSlot {
   slotId: string;

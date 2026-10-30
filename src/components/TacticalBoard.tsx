@@ -57,6 +57,19 @@ const FORMATIONS: Record<FormationKey, PitchSlot[]> = {
     { slotId: "slot-9", role: "DC", label: "Delantero Izquierdo", x: 35, y: 16 },
     { slotId: "slot-10", role: "DC", label: "Delantero Derecho", x: 65, y: 16 },
   ],
+  "3-4-1-2": [
+    { slotId: "slot-0", role: "POR", label: "Portero", x: 50, y: 88 },
+    { slotId: "slot-1", role: "DFC", label: "DFC Izquierdo", x: 23, y: 72 },
+    { slotId: "slot-2", role: "DFC", label: "DFC Central", x: 50, y: 74 },
+    { slotId: "slot-3", role: "DFC", label: "DFC Derecho", x: 77, y: 72 },
+    { slotId: "slot-4", role: "MCO", label: "Mediapunta Central", x: 50, y: 32 },
+    { slotId: "slot-5", role: "MI", label: "Banda Izquierda", x: 14, y: 50 },
+    { slotId: "slot-6", role: "MC", label: "Interior Izquierdo", x: 38, y: 53 },
+    { slotId: "slot-7", role: "MC", label: "Interior Derecho", x: 62, y: 53 },
+    { slotId: "slot-8", role: "MD", label: "Banda Derecha", x: 86, y: 50 },
+    { slotId: "slot-9", role: "DC", label: "Delantero Izquierdo", x: 35, y: 15 },
+    { slotId: "slot-10", role: "DC", label: "Delantero Derecho", x: 65, y: 15 },
+  ],
   "4-3-3": [
     { slotId: "slot-0", role: "POR", label: "Portero", x: 50, y: 88 },
     { slotId: "slot-1", role: "LI", label: "Lateral Izquierdo", x: 15, y: 71 },
@@ -449,6 +462,13 @@ export default function TacticalBoard() {
   const playersInLineup = new Set(
     Object.values(lineup).filter((id): id is string => Boolean(id))
   );
+
+  // Ordenar el banquillo para mostrar primero los suplentes disponibles y al final los que ya están en el 11
+  const sortedBenchPlayers = [...players].sort((a, b) => {
+    const aInEleven = playersInLineup.has(a.id) ? 1 : 0;
+    const bInEleven = playersInLineup.has(b.id) ? 1 : 0;
+    return aInEleven - bInEleven;
+  });
 
   const assignPlayerToSlot = (playerId: string, targetSlotId: string) => {
     setLineup((prev) => {
@@ -1033,8 +1053,9 @@ export default function TacticalBoard() {
                 <span className="font-rajdhani font-bold text-xs uppercase tracking-wider text-[#D49B35] px-2.5">
                   Formación:
                 </span>
-                {(["3-1-4-2", "4-3-3", "4-2-3-1"] as FormationKey[]).map(
-                  (fmt) => (
+                {(
+                  ["3-1-4-2", "3-4-1-2", "4-3-3", "4-2-3-1"] as FormationKey[]
+                ).map((fmt) => (
                     <button
                       key={fmt}
                       type="button"
@@ -1394,9 +1415,9 @@ export default function TacticalBoard() {
                 </span>
               </div>
 
-              {/* Grid de los 17 jugadores del banquillo */}
+              {/* Grid de los 17 jugadores del banquillo (suplentes primero, titulares al final) */}
               <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-3 gap-2.5 sm:gap-3 max-h-[680px] overflow-y-auto pr-1 custom-scrollbar">
-                {players.map((player) => (
+                {sortedBenchPlayers.map((player) => (
                   <BenchPlayerCard
                     key={player.id}
                     player={player}
