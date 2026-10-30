@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-atlantica-blue: #004B93;
+  --color-atlantica-night: #041122;
+  --color-atlantica-gold: #D49B35;
+  --color-atlantica-white: #FFFFFF;
+}
+
+html {
+  background-color: #041122;
+  color: #FFFFFF;
+  scroll-behavior: auto;
+}
+
+body {
+  background-color: #041122;
+  color: #FFFFFF;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Animación shimmer para el destello holográfico en las cartas */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-150%) skewX(-15deg);
+  }
+  100% {
+    transform: translateX(350%) skewX(-15deg);
+  }
+}
+
+/* Scrollbar personalizada estilo eSports Atlántica F.C. */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(4, 17, 34, 0.7);
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(212, 155, 53, 0.55);
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 155, 53, 0.9);
+}
