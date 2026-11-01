@@ -7,15 +7,21 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
+import { BarChart3 } from "lucide-react";
 import { Player } from "@/types/player";
 import ClubCrest from "./ClubCrest";
 
 interface PlayerCardProps {
   player: Player;
   index?: number;
+  onSelect?: (player: Player) => void;
 }
 
-export default function PlayerCard({ player, index = 0 }: PlayerCardProps) {
+export default function PlayerCard({
+  player,
+  index = 0,
+  onSelect,
+}: PlayerCardProps) {
   const [imageError, setImageError] = useState(false);
   const cardRef = useRef<HTMLDivElement | null>(null);
 
@@ -61,13 +67,22 @@ export default function PlayerCard({ player, index = 0 }: PlayerCardProps) {
         ref={cardRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
+        onClick={() => onSelect?.(player)}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onSelect?.(player);
+          }
+        }}
         style={{
           rotateX,
           rotateY,
           transformStyle: "preserve-3d",
         }}
         whileHover={{ scale: 1.05 }}
-        className="group relative w-full aspect-[2/3] flex items-center justify-center cursor-pointer select-none"
+        className="group relative w-full aspect-[2/3] flex items-center justify-center cursor-pointer select-none focus:outline-none"
       >
         {!imageError ? (
           <img
@@ -99,6 +114,14 @@ export default function PlayerCard({ player, index = 0 }: PlayerCardProps) {
             </div>
           </div>
         )}
+
+        {/* Insignia sutil en dorado al hacer hover: "VER ESTADÍSTICAS 📊" */}
+        <div className="pointer-events-none absolute bottom-5 inset-x-0 flex justify-center z-20 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#041122]/95 border border-[#D49B35] text-[#D49B35] font-rajdhani font-extrabold text-xs tracking-[0.16em] uppercase shadow-[0_0_20px_rgba(212,155,53,0.65)] backdrop-blur-md">
+            <BarChart3 className="w-3.5 h-3.5 text-[#D49B35]" />
+            <span>VER ESTADÍSTICAS 📊</span>
+          </span>
+        </div>
       </motion.div>
     </motion.div>
   );
