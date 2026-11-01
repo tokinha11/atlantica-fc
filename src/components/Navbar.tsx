@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Shield, Crosshair } from "lucide-react";
@@ -9,9 +9,28 @@ import ClubCrest from "./ClubCrest";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const [hiddenByStatsModal, setHiddenByStatsModal] = useState(false);
+
+  useEffect(() => {
+    const handleModalToggle = (e: Event) => {
+      const customEvent = e as CustomEvent<{ open: boolean }>;
+      setHiddenByStatsModal(Boolean(customEvent.detail?.open));
+    };
+
+    window.addEventListener("stats-modal-toggle", handleModalToggle);
+    return () => {
+      window.removeEventListener("stats-modal-toggle", handleModalToggle);
+    };
+  }, []);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-[#041122]/70 border-b border-[#D49B35]/30 transition-all duration-300">
+    <header
+      className={clsx(
+        "fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-[#041122]/70 border-b border-[#D49B35]/30 transition-all duration-300",
+        hiddenByStatsModal &&
+          "opacity-0 -translate-y-full pointer-events-none"
+      )}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         {/* Izquierda: Escudo + Nombre del Club */}
         <Link

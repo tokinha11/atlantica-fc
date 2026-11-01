@@ -180,7 +180,7 @@ export default function PlayerStatsModal({
   const [compareCategory, setCompareCategory] =
     useState<ComparisonCategory>("per-game");
 
-  // Cerrar con tecla ESC y bloquear scroll del body mientras el modal está abierto
+  // Cerrar con tecla ESC, bloquear scroll del body y ocultar la Navbar mientras el modal está abierto
   useEffect(() => {
     if (!player) return;
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -189,10 +189,16 @@ export default function PlayerStatsModal({
     window.addEventListener("keydown", handleKeyDown);
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    window.dispatchEvent(
+      new CustomEvent("stats-modal-toggle", { detail: { open: true } })
+    );
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = prevOverflow;
+      window.dispatchEvent(
+        new CustomEvent("stats-modal-toggle", { detail: { open: false } })
+      );
     };
   }, [player, onClose]);
 
@@ -377,7 +383,7 @@ export default function PlayerStatsModal({
         exit={{ opacity: 0 }}
         transition={{ duration: 0.25 }}
         onClick={onClose}
-        className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-[#041122]/85 backdrop-blur-xl overflow-y-auto"
+        className="fixed inset-0 z-[60] flex items-center justify-center p-3 sm:p-5 bg-[#041122]/85 backdrop-blur-xl overflow-y-auto"
       >
         <motion.div
           initial={{ opacity: 0, scale: 0.93, y: 24 }}

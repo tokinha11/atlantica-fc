@@ -332,15 +332,6 @@ export default function HomePage() {
             </div>
           </section>
 
-          {/* Modal Táctico Interactivo de Estadísticas en Tiempo Real (Club ID: 138351) */}
-          <PlayerStatsModal
-            player={selectedPlayer}
-            allPlayers={players}
-            clubStats={clubStats}
-            isLoadingStats={isLoadingStats}
-            onClose={() => setSelectedPlayer(null)}
-          />
-
           {/* ================================================================
               SECCIÓN 4 — ENLACES DE INTERÉS Y COMPETICIONES (FOOTER INTERACTIVO)
           ================================================================= */}
@@ -467,6 +458,15 @@ export default function HomePage() {
             </div>
           </footer>
         </div>
+
+        {/* Modal Táctico Interactivo de Estadísticas en Tiempo Real (Club ID: 138351) */}
+        <PlayerStatsModal
+          player={selectedPlayer}
+          allPlayers={players}
+          clubStats={clubStats}
+          isLoadingStats={isLoadingStats}
+          onClose={() => setSelectedPlayer(null)}
+        />
       </main>
     </SmoothScrollProvider>
   );
