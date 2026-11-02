@@ -42,59 +42,60 @@ import ClubCrest from "./ClubCrest";
 const players: Player[] = playersData;
 const DISCORD_WEBHOOK_STORAGE_KEY = "atlantica_fc_discord_webhook_url";
 
-// Definición exacta de formaciones (coordenadas en porcentaje sobre el césped)
+// Definición exacta de formaciones (coordenadas en porcentaje sobre el césped,
+// calibradas vertical y horizontalmente para evitar solapamientos entre filas)
 const FORMATIONS: Record<FormationKey, PitchSlot[]> = {
   "3-1-4-2": [
-    { slotId: "slot-0", role: "POR", label: "Portero", x: 50, y: 88 },
-    { slotId: "slot-1", role: "DFC", label: "DFC Izquierdo", x: 23, y: 71 },
-    { slotId: "slot-2", role: "DFC", label: "DFC Central", x: 50, y: 73 },
-    { slotId: "slot-3", role: "DFC", label: "DFC Derecho", x: 77, y: 71 },
-    { slotId: "slot-4", role: "MCD", label: "Pivote Defensivo", x: 50, y: 55 },
-    { slotId: "slot-5", role: "MI", label: "Banda Izquierda", x: 14, y: 38 },
-    { slotId: "slot-6", role: "MC", label: "Interior Izquierdo", x: 38, y: 37 },
-    { slotId: "slot-7", role: "MC", label: "Interior Derecho", x: 62, y: 37 },
-    { slotId: "slot-8", role: "MD", label: "Banda Derecha", x: 86, y: 38 },
-    { slotId: "slot-9", role: "DC", label: "Delantero Izquierdo", x: 35, y: 16 },
-    { slotId: "slot-10", role: "DC", label: "Delantero Derecho", x: 65, y: 16 },
+    { slotId: "slot-0", role: "POR", label: "Portero", x: 50, y: 89 },
+    { slotId: "slot-1", role: "DFC", label: "DFC Izquierdo", x: 22, y: 70 },
+    { slotId: "slot-2", role: "DFC", label: "DFC Central", x: 50, y: 71 },
+    { slotId: "slot-3", role: "DFC", label: "DFC Derecho", x: 78, y: 70 },
+    { slotId: "slot-4", role: "MCD", label: "Pivote Defensivo", x: 50, y: 52 },
+    { slotId: "slot-5", role: "MI", label: "Banda Izquierda", x: 13, y: 36 },
+    { slotId: "slot-6", role: "MC", label: "Interior Izquierdo", x: 37, y: 34 },
+    { slotId: "slot-7", role: "MC", label: "Interior Derecho", x: 63, y: 34 },
+    { slotId: "slot-8", role: "MD", label: "Banda Derecha", x: 87, y: 36 },
+    { slotId: "slot-9", role: "DC", label: "Delantero Izquierdo", x: 34, y: 13 },
+    { slotId: "slot-10", role: "DC", label: "Delantero Derecho", x: 66, y: 13 },
   ],
   "3-4-1-2": [
-    { slotId: "slot-0", role: "POR", label: "Portero", x: 50, y: 88 },
-    { slotId: "slot-1", role: "DFC", label: "DFC Izquierdo", x: 23, y: 72 },
-    { slotId: "slot-2", role: "DFC", label: "DFC Central", x: 50, y: 74 },
-    { slotId: "slot-3", role: "DFC", label: "DFC Derecho", x: 77, y: 72 },
-    { slotId: "slot-4", role: "MCO", label: "Mediapunta Central", x: 50, y: 32 },
-    { slotId: "slot-5", role: "MI", label: "Banda Izquierda", x: 14, y: 50 },
-    { slotId: "slot-6", role: "MC", label: "Interior Izquierdo", x: 38, y: 53 },
-    { slotId: "slot-7", role: "MC", label: "Interior Derecho", x: 62, y: 53 },
-    { slotId: "slot-8", role: "MD", label: "Banda Derecha", x: 86, y: 50 },
-    { slotId: "slot-9", role: "DC", label: "Delantero Izquierdo", x: 35, y: 15 },
-    { slotId: "slot-10", role: "DC", label: "Delantero Derecho", x: 65, y: 15 },
+    { slotId: "slot-0", role: "POR", label: "Portero", x: 50, y: 89 },
+    { slotId: "slot-1", role: "DFC", label: "DFC Izquierdo", x: 22, y: 70 },
+    { slotId: "slot-2", role: "DFC", label: "DFC Central", x: 50, y: 71 },
+    { slotId: "slot-3", role: "DFC", label: "DFC Derecho", x: 78, y: 70 },
+    { slotId: "slot-4", role: "MCO", label: "Mediapunta Central", x: 50, y: 31 },
+    { slotId: "slot-5", role: "MI", label: "Banda Izquierda", x: 13, y: 48 },
+    { slotId: "slot-6", role: "MC", label: "Interior Izquierdo", x: 36, y: 51 },
+    { slotId: "slot-7", role: "MC", label: "Interior Derecho", x: 64, y: 51 },
+    { slotId: "slot-8", role: "MD", label: "Banda Derecha", x: 87, y: 48 },
+    { slotId: "slot-9", role: "DC", label: "Delantero Izquierdo", x: 34, y: 13 },
+    { slotId: "slot-10", role: "DC", label: "Delantero Derecho", x: 66, y: 13 },
   ],
   "4-3-3": [
-    { slotId: "slot-0", role: "POR", label: "Portero", x: 50, y: 88 },
-    { slotId: "slot-1", role: "LI", label: "Lateral Izquierdo", x: 15, y: 71 },
-    { slotId: "slot-2", role: "DFC", label: "Central Izquierdo", x: 38, y: 73 },
-    { slotId: "slot-3", role: "DFC", label: "Central Derecho", x: 62, y: 73 },
-    { slotId: "slot-4", role: "LD", label: "Lateral Derecho", x: 85, y: 71 },
-    { slotId: "slot-5", role: "MCD", label: "Pivote Defensivo", x: 50, y: 53 },
-    { slotId: "slot-6", role: "MC", label: "Interior Izquierdo", x: 30, y: 39 },
-    { slotId: "slot-7", role: "MC", label: "Interior Derecho", x: 70, y: 39 },
-    { slotId: "slot-8", role: "EI", label: "Extremo Izquierdo", x: 18, y: 19 },
-    { slotId: "slot-9", role: "DC", label: "Delantero Centro", x: 50, y: 15 },
-    { slotId: "slot-10", role: "ED", label: "Extremo Derecho", x: 82, y: 19 },
+    { slotId: "slot-0", role: "POR", label: "Portero", x: 50, y: 89 },
+    { slotId: "slot-1", role: "LI", label: "Lateral Izquierdo", x: 14, y: 70 },
+    { slotId: "slot-2", role: "DFC", label: "Central Izquierdo", x: 37, y: 71 },
+    { slotId: "slot-3", role: "DFC", label: "Central Derecho", x: 63, y: 71 },
+    { slotId: "slot-4", role: "LD", label: "Lateral Derecho", x: 86, y: 70 },
+    { slotId: "slot-5", role: "MCD", label: "Pivote Defensivo", x: 50, y: 52 },
+    { slotId: "slot-6", role: "MC", label: "Interior Izquierdo", x: 29, y: 36 },
+    { slotId: "slot-7", role: "MC", label: "Interior Derecho", x: 71, y: 36 },
+    { slotId: "slot-8", role: "EI", label: "Extremo Izquierdo", x: 17, y: 17 },
+    { slotId: "slot-9", role: "DC", label: "Delantero Centro", x: 50, y: 13 },
+    { slotId: "slot-10", role: "ED", label: "Extremo Derecho", x: 83, y: 17 },
   ],
   "4-2-3-1": [
-    { slotId: "slot-0", role: "POR", label: "Portero", x: 50, y: 88 },
-    { slotId: "slot-1", role: "LI", label: "Lateral Izquierdo", x: 15, y: 72 },
-    { slotId: "slot-2", role: "DFC", label: "Central Izquierdo", x: 38, y: 74 },
-    { slotId: "slot-3", role: "DFC", label: "Central Derecho", x: 62, y: 74 },
-    { slotId: "slot-4", role: "LD", label: "Lateral Derecho", x: 85, y: 72 },
-    { slotId: "slot-5", role: "MCD", label: "Doble Pivote Izq.", x: 36, y: 54 },
-    { slotId: "slot-6", role: "MCD", label: "Doble Pivote Der.", x: 64, y: 54 },
-    { slotId: "slot-7", role: "MCO", label: "Mediapunta Izq.", x: 20, y: 35 },
-    { slotId: "slot-8", role: "MCO", label: "Enganche Central", x: 50, y: 33 },
-    { slotId: "slot-9", role: "MCO", label: "Mediapunta Der.", x: 80, y: 35 },
-    { slotId: "slot-10", role: "DC", label: "Delantero Centro", x: 50, y: 15 },
+    { slotId: "slot-0", role: "POR", label: "Portero", x: 50, y: 89 },
+    { slotId: "slot-1", role: "LI", label: "Lateral Izquierdo", x: 14, y: 70 },
+    { slotId: "slot-2", role: "DFC", label: "Central Izquierdo", x: 37, y: 71 },
+    { slotId: "slot-3", role: "DFC", label: "Central Derecho", x: 63, y: 71 },
+    { slotId: "slot-4", role: "LD", label: "Lateral Derecho", x: 86, y: 70 },
+    { slotId: "slot-5", role: "MCD", label: "Doble Pivote Izq.", x: 35, y: 52 },
+    { slotId: "slot-6", role: "MCD", label: "Doble Pivote Der.", x: 65, y: 52 },
+    { slotId: "slot-7", role: "MCO", label: "Mediapunta Izq.", x: 18, y: 34 },
+    { slotId: "slot-8", role: "MCO", label: "Enganche Central", x: 50, y: 32 },
+    { slotId: "slot-9", role: "MCO", label: "Mediapunta Der.", x: 82, y: 34 },
+    { slotId: "slot-10", role: "DC", label: "Delantero Centro", x: 50, y: 12 },
   ],
 };
 
@@ -119,6 +120,100 @@ function DiscordIcon({ className = "w-4 h-4" }: { className?: string }) {
   );
 }
 
+// Caché en memoria de imágenes pre-decodificadas para exportación instantánea en móvil y escritorio
+const IMAGE_ELEMENT_CACHE = new Map<string, HTMLImageElement>();
+
+function loadCachedImage(src: string): Promise<HTMLImageElement | null> {
+  if (typeof window === "undefined") return Promise.resolve(null);
+  const cached = IMAGE_ELEMENT_CACHE.get(src);
+  if (cached && cached.complete && cached.naturalWidth > 0) {
+    return Promise.resolve(cached);
+  }
+
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.decoding = "async";
+    img.onload = async () => {
+      try {
+        if (typeof img.decode === "function") {
+          await img.decode();
+        }
+      } catch {
+        // Ignorar si decode() falla tras onload
+      }
+      IMAGE_ELEMENT_CACHE.set(src, img);
+      resolve(img);
+    };
+    img.onerror = () => resolve(null);
+    img.src = src;
+  });
+}
+
+function drawRoundedRectPath(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  w: number,
+  h: number,
+  r: number
+) {
+  const radius = Math.min(r, w / 2, h / 2);
+  ctx.beginPath();
+  ctx.moveTo(x + radius, y);
+  ctx.lineTo(x + w - radius, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + radius);
+  ctx.lineTo(x + w, y + h - radius);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - radius, y + h);
+  ctx.lineTo(x + radius, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - radius);
+  ctx.lineTo(x, y + radius);
+  ctx.quadraticCurveTo(x, y, x + radius, y);
+  ctx.closePath();
+}
+
+function canvasToPngBlob(canvas: HTMLCanvasElement): Promise<Blob> {
+  return new Promise((resolve, reject) => {
+    if (typeof canvas.toBlob === "function") {
+      canvas.toBlob(
+        (blob) => {
+          if (blob) {
+            resolve(blob);
+            return;
+          }
+          try {
+            const dataUrl = canvas.toDataURL("image/png");
+            const byteString = atob(dataUrl.split(",")[1] || "");
+            const ab = new ArrayBuffer(byteString.length);
+            const ia = new Uint8Array(ab);
+            for (let i = 0; i < byteString.length; i++) {
+              ia[i] = byteString.charCodeAt(i);
+            }
+            resolve(new Blob([ab], { type: "image/png" }));
+          } catch (err) {
+            reject(err);
+          }
+        },
+        "image/png",
+        1.0
+      );
+    } else {
+      try {
+        const dataUrl = canvas.toDataURL("image/png");
+        const byteString = atob(dataUrl.split(",")[1] || "");
+        const ab = new ArrayBuffer(byteString.length);
+        const ia = new Uint8Array(ab);
+        for (let i = 0; i < byteString.length; i++) {
+          ia[i] = byteString.charCodeAt(i);
+        }
+        resolve(new Blob([ab], { type: "image/png" }));
+      } catch (err) {
+        reject(err);
+      }
+    }
+  });
+}
+
 // Miniatura con silueta real transparente y drop-shadow dorado siguiendo la corona y el escudo
 function MiniCardArt({
   player,
@@ -140,6 +235,9 @@ function MiniCardArt({
         <img
           src={player.cardImage}
           alt={player.name}
+          loading="eager"
+          decoding="async"
+          crossOrigin="anonymous"
           onError={() => setImgError(true)}
           style={{
             filter: "drop-shadow(0 10px 20px rgba(212, 155, 53, 0.35))",
@@ -413,6 +511,15 @@ export default function TacticalBoard() {
     } catch {
       // Ignorar si localStorage no está disponible
     }
+
+    // Precargar y decodificar el escudo y las 17 cartas .webp en memoria
+    // para que la exportación en móvil y escritorio sea instantánea y nunca omita cartas
+    void loadCachedImage("/logo/escudo.png");
+    players.forEach((p) => {
+      if (p.cardImage) {
+        void loadCachedImage(p.cardImage);
+      }
+    });
   }, []);
 
   const showToast = (
@@ -606,34 +713,566 @@ export default function TacticalBoard() {
   };
 
   // ==========================================================================
-  // FUNCIÓN AUXILIAR: generateLineupBlob() con toBlob (pixelRatio: 2)
+  // MOTOR DE RENDERIZADO NATIVO HTML5 CANVAS 2D (100% FIABLE EN MÓVIL Y PC)
+  // Evita el fallo de SVG <foreignObject> en Safari iOS / Chrome Android donde
+  // html-to-image omite las cartas .webp con filtro drop-shadow.
+  // ==========================================================================
+  const renderLineupPosterCanvas = async (): Promise<Blob> => {
+    // Esperar brevemente a que las fuentes web estén listas sin bloquear el gesto táctil
+    if (typeof document !== "undefined" && "fonts" in document) {
+      await Promise.race([
+        document.fonts.ready,
+        new Promise((r) => setTimeout(r, 120)),
+      ]);
+    }
+
+    // Asegurar que el escudo y las cartas de los jugadores en el 11 están cargadas en caché
+    const assignedPlayersMap = new Map<string, HTMLImageElement | null>();
+    const crestPromise = loadCachedImage("/logo/escudo.png");
+
+    await Promise.all(
+      currentSlots.map(async (slot) => {
+        const p = getPlayerById(lineup[slot.slotId]);
+        if (p && p.cardImage) {
+          const img = await loadCachedImage(p.cardImage);
+          assignedPlayersMap.set(p.id, img);
+        }
+      })
+    );
+    const crestImg = await crestPromise;
+
+    const W = 1200;
+    const H_HEADER = 148;
+    const H_PITCH = 1440;
+    const H_FOOTER = 92;
+    const H = H_HEADER + H_PITCH + H_FOOTER; // 1680px
+
+    const canvas = document.createElement("canvas");
+    canvas.width = W;
+    canvas.height = H;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) {
+      throw new Error("No se pudo inicializar el contexto 2D del Canvas.");
+    }
+
+    const cinzelFont = "Cinzel, Georgia, serif";
+    const rajdhaniFont = "Rajdhani, system-ui, -apple-system, sans-serif";
+
+    // Fondo base del cartel
+    ctx.fillStyle = "#041122";
+    ctx.fillRect(0, 0, W, H);
+
+    // ------------------------------------------------------------------------
+    // 1. CABECERA OFICIAL (0 -> H_HEADER)
+    // ------------------------------------------------------------------------
+    const headerGrad = ctx.createLinearGradient(0, 0, W, 0);
+    headerGrad.addColorStop(0, "#041122");
+    headerGrad.addColorStop(0.5, "rgba(0, 75, 147, 0.62)");
+    headerGrad.addColorStop(1, "#041122");
+    ctx.fillStyle = headerGrad;
+    ctx.fillRect(0, 0, W, H_HEADER);
+
+    // Resplandor radial dorado superior derecho
+    const headerGlow = ctx.createRadialGradient(
+      W * 0.85,
+      15,
+      10,
+      W * 0.85,
+      15,
+      520
+    );
+    headerGlow.addColorStop(0, "rgba(212, 155, 53, 0.22)");
+    headerGlow.addColorStop(1, "rgba(212, 155, 53, 0)");
+    ctx.fillStyle = headerGlow;
+    ctx.fillRect(0, 0, W, H_HEADER);
+
+    // Escudo del club en cabecera
+    if (crestImg) {
+      ctx.save();
+      ctx.shadowColor = "rgba(212, 155, 53, 0.55)";
+      ctx.shadowBlur = 18;
+      const crestSize = 98;
+      const aspect = crestImg.naturalWidth / (crestImg.naturalHeight || 1);
+      const drawW = aspect >= 1 ? crestSize : crestSize * aspect;
+      const drawH = aspect >= 1 ? crestSize / aspect : crestSize;
+      ctx.drawImage(
+        crestImg,
+        46 + (crestSize - drawW) / 2,
+        (H_HEADER - drawH) / 2,
+        drawW,
+        drawH
+      );
+      ctx.restore();
+    }
+
+    // Título y subtítulo en cabecera
+    ctx.save();
+    ctx.textBaseline = "middle";
+    ctx.fillStyle = "#FFFFFF";
+    ctx.font = `700 36px ${cinzelFont}`;
+    ctx.fillText("ATLÁNTICA F.C. — XI TITULAR", 164, H_HEADER / 2 - 16);
+
+    ctx.fillStyle = "#D49B35";
+    ctx.font = `700 22px ${rajdhaniFont}`;
+    const subtitleText = (
+      matchSubtitle || "EA SPORTS FC 27 — CLUBES PRO"
+    ).toUpperCase();
+    ctx.fillText(subtitleText, 164, H_HEADER / 2 + 24);
+    ctx.restore();
+
+    // Insignia derecha "SISTEMA"
+    ctx.save();
+    ctx.textAlign = "right";
+    ctx.fillStyle = "rgba(255, 255, 255, 0.62)";
+    ctx.font = `700 17px ${rajdhaniFont}`;
+    ctx.fillText("SISTEMA", W - 48, 44);
+
+    ctx.font = `800 28px ${rajdhaniFont}`;
+    const fmtTextWidth = ctx.measureText(formation).width;
+    const fmtBoxW = Math.max(128, fmtTextWidth + 44);
+    const fmtBoxH = 52;
+    const fmtBoxX = W - 48 - fmtBoxW;
+    const fmtBoxY = 56;
+
+    ctx.shadowColor = "rgba(212, 155, 53, 0.35)";
+    ctx.shadowBlur = 16;
+    drawRoundedRectPath(ctx, fmtBoxX, fmtBoxY, fmtBoxW, fmtBoxH, 12);
+    ctx.fillStyle = "rgba(4, 17, 34, 0.92)";
+    ctx.fill();
+    ctx.lineWidth = 2.2;
+    ctx.strokeStyle = "#D49B35";
+    ctx.stroke();
+
+    ctx.shadowBlur = 0;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillStyle = "#D49B35";
+    ctx.fillText(formation, fmtBoxX + fmtBoxW / 2, fmtBoxY + fmtBoxH / 2 + 1);
+    ctx.restore();
+
+    // Línea divisoria inferior de la cabecera
+    ctx.strokeStyle = "rgba(212, 155, 53, 0.55)";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(0, H_HEADER);
+    ctx.lineTo(W, H_HEADER);
+    ctx.stroke();
+
+    // ------------------------------------------------------------------------
+    // 2. CÉSPED TÁCTICO NOCTURNO Y LÍNEAS REGLAMENTARIAS
+    // ------------------------------------------------------------------------
+    const pitchTop = H_HEADER;
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(0, pitchTop, W, H_PITCH);
+    ctx.clip();
+
+    // Base azul noche del césped
+    ctx.fillStyle = "#04182E";
+    ctx.fillRect(0, pitchTop, W, H_PITCH);
+
+    // Franjas horizontales de césped estilizado
+    const stripeHeight = 69;
+    for (let y = 0, idx = 0; y < H_PITCH; y += stripeHeight, idx++) {
+      ctx.fillStyle =
+        idx % 2 === 0 ? "rgba(0, 75, 147, 0.14)" : "rgba(4, 17, 34, 0.25)";
+      ctx.fillRect(0, pitchTop + y, W, stripeHeight);
+    }
+
+    // Iluminación radial central sobre el césped
+    const pitchRadial = ctx.createRadialGradient(
+      W / 2,
+      pitchTop + H_PITCH / 2,
+      40,
+      W / 2,
+      pitchTop + H_PITCH / 2,
+      W * 0.65
+    );
+    pitchRadial.addColorStop(0, "rgba(0, 75, 147, 0.35)");
+    pitchRadial.addColorStop(1, "rgba(4, 17, 34, 0.88)");
+    ctx.fillStyle = pitchRadial;
+    ctx.fillRect(0, pitchTop, W, H_PITCH);
+
+    // Marca de agua del escudo en el centro del campo
+    if (crestImg) {
+      ctx.save();
+      ctx.globalAlpha = 0.08;
+      const wmSize = 460;
+      const aspect = crestImg.naturalWidth / (crestImg.naturalHeight || 1);
+      const wmW = aspect >= 1 ? wmSize : wmSize * aspect;
+      const wmH = aspect >= 1 ? wmSize / aspect : wmSize;
+      ctx.drawImage(
+        crestImg,
+        (W - wmW) / 2,
+        pitchTop + (H_PITCH - wmH) / 2,
+        wmW,
+        wmH
+      );
+      ctx.restore();
+    }
+
+    // Líneas reglamentarias doradas (escaladas desde viewBox 600x750)
+    const sx = W / 600; // 2.0
+    const sy = H_PITCH / 750; // 1.84
+    ctx.save();
+    ctx.translate(0, pitchTop);
+    ctx.strokeStyle = "rgba(212, 155, 53, 0.42)";
+    ctx.fillStyle = "rgba(212, 155, 53, 0.6)";
+    ctx.lineWidth = 4.2;
+
+    // Perímetro exterior
+    drawRoundedRectPath(ctx, 30 * sx, 25 * sy, 540 * sx, 700 * sy, 10);
+    ctx.stroke();
+
+    // Línea de medio campo
+    ctx.beginPath();
+    ctx.moveTo(30 * sx, 375 * sy);
+    ctx.lineTo(570 * sx, 375 * sy);
+    ctx.stroke();
+
+    // Círculo central y punto de saque
+    ctx.beginPath();
+    ctx.ellipse(300 * sx, 375 * sy, 72 * sx, 72 * sy, 0, 0, Math.PI * 2);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(300 * sx, 375 * sy, 7, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Área grande y pequeña superior
+    ctx.strokeRect(135 * sx, 25 * sy, 330 * sx, 115 * sy);
+    ctx.strokeRect(210 * sx, 25 * sy, 180 * sx, 42 * sy);
+    ctx.beginPath();
+    ctx.arc(300 * sx, 102 * sy, 5.5, 0, Math.PI * 2);
+    ctx.fill();
+    // Semicírculo área superior
+    ctx.beginPath();
+    ctx.ellipse(
+      300 * sx,
+      102 * sy,
+      65 * sx,
+      65 * sy,
+      0,
+      0.62,
+      Math.PI - 0.62,
+      false
+    );
+    ctx.stroke();
+
+    // Área grande y pequeña inferior
+    ctx.strokeRect(135 * sx, 610 * sy, 330 * sx, 115 * sy);
+    ctx.strokeRect(210 * sx, 683 * sy, 180 * sx, 42 * sy);
+    ctx.beginPath();
+    ctx.arc(300 * sx, 648 * sy, 5.5, 0, Math.PI * 2);
+    ctx.fill();
+    // Semicírculo área inferior
+    ctx.beginPath();
+    ctx.ellipse(
+      300 * sx,
+      648 * sy,
+      65 * sx,
+      65 * sy,
+      0,
+      Math.PI + 0.62,
+      Math.PI * 2 - 0.62,
+      false
+    );
+    ctx.stroke();
+
+    ctx.restore();
+
+    // ------------------------------------------------------------------------
+    // 3. LOS 11 JUGADORES / POSICIONES SOBRE EL CÉSPED
+    // Escala calibrada (cardW: 132, cardH: 198, totalNodeH: 235px) + renderizado
+    // en 2 pasadas (1º siluetas de cartas, 2º insignias de rol y píldoras de nombre
+    // siempre en primer plano) para que ninguna carta tape jamás un nombre.
+    // ------------------------------------------------------------------------
+    const slotsSortedByDepth = [...currentSlots].sort((a, b) => a.y - b.y);
+    const cardW = 132;
+    const cardH = 198;
+    const rolePillH = 26;
+    const namePillH = 30;
+    const totalNodeH = rolePillH - 3 + cardH - 16 + namePillH; // 235px
+
+    // PASADA 1: Dibujar todas las cartas .webp (o huecos vacíos) al fondo
+    for (const slot of slotsSortedByDepth) {
+      const assignedPlayer = getPlayerById(lineup[slot.slotId]);
+      const cx = (slot.x / 100) * W;
+      const cy = pitchTop + (slot.y / 100) * H_PITCH;
+      const topStart = cy - totalNodeH / 2;
+      const cardY = topStart + rolePillH - 3;
+
+      if (assignedPlayer) {
+        const playerImg = assignedPlayersMap.get(assignedPlayer.id) ?? null;
+        if (playerImg) {
+          ctx.save();
+          ctx.shadowColor = "rgba(212, 155, 53, 0.48)";
+          ctx.shadowBlur = 22;
+          ctx.shadowOffsetX = 0;
+          ctx.shadowOffsetY = 10;
+
+          const imgAspect =
+            playerImg.naturalWidth / (playerImg.naturalHeight || 1);
+          const targetAspect = cardW / cardH;
+          let drawW = cardW;
+          let drawH = cardH;
+          if (imgAspect > targetAspect) {
+            drawH = cardW / imgAspect;
+          } else {
+            drawW = cardH * imgAspect;
+          }
+
+          ctx.drawImage(
+            playerImg,
+            cx - drawW / 2,
+            cardY + (cardH - drawH) / 2,
+            drawW,
+            drawH
+          );
+          ctx.restore();
+        } else {
+          ctx.save();
+          drawRoundedRectPath(
+            ctx,
+            cx - cardW / 2,
+            cardY,
+            cardW,
+            cardH,
+            14
+          );
+          ctx.fillStyle = "rgba(4, 17, 34, 0.9)";
+          ctx.fill();
+          ctx.lineWidth = 2.2;
+          ctx.strokeStyle = "#D49B35";
+          ctx.stroke();
+          if (crestImg) {
+            ctx.drawImage(crestImg, cx - 34, cardY + 42, 68, 68);
+          }
+          ctx.restore();
+        }
+      } else {
+        ctx.save();
+        const emptyW = 114;
+        const emptyH = 152;
+        const emptyX = cx - emptyW / 2;
+        const emptyY = cardY + 12;
+
+        drawRoundedRectPath(ctx, emptyX, emptyY, emptyW, emptyH, 14);
+        ctx.fillStyle = "rgba(4, 17, 34, 0.68)";
+        ctx.fill();
+        ctx.setLineDash([9, 7]);
+        ctx.lineWidth = 2.6;
+        ctx.strokeStyle = "rgba(212, 155, 53, 0.55)";
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        ctx.beginPath();
+        ctx.arc(cx, emptyY + emptyH / 2, 20, 0, Math.PI * 2);
+        ctx.strokeStyle = "rgba(212, 155, 53, 0.6)";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        ctx.fillStyle = "#D49B35";
+        ctx.font = `700 24px ${rajdhaniFont}`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText("+", cx, emptyY + emptyH / 2 + 1);
+        ctx.restore();
+      }
+    }
+
+    // PASADA 2: Dibujar todas las insignias de posición (POR, DFC, MCD/MCO, DC...)
+    // y todas las píldoras inferiores (#DORSAL NOMBRE) siempre en primer plano
+    for (const slot of slotsSortedByDepth) {
+      const assignedPlayer = getPlayerById(lineup[slot.slotId]);
+      const cx = (slot.x / 100) * W;
+      const cy = pitchTop + (slot.y / 100) * H_PITCH;
+      const topStart = cy - totalNodeH / 2;
+      const rolePillY = topStart;
+      const cardY = rolePillY + rolePillH - 3;
+
+      // Insignia superior de rol
+      ctx.save();
+      ctx.font = `800 17px ${rajdhaniFont}`;
+      const roleText = slot.role.toUpperCase();
+      const roleTextW = ctx.measureText(roleText).width;
+      const rolePillW = Math.max(56, roleTextW + 24);
+      const rolePillX = cx - rolePillW / 2;
+
+      if (assignedPlayer) {
+        ctx.shadowColor = "rgba(212, 155, 53, 0.65)";
+        ctx.shadowBlur = 12;
+        const roleGrad = ctx.createLinearGradient(
+          rolePillX,
+          rolePillY,
+          rolePillX + rolePillW,
+          rolePillY
+        );
+        roleGrad.addColorStop(0, "#D49B35");
+        roleGrad.addColorStop(0.5, "#F3CA6E");
+        roleGrad.addColorStop(1, "#D49B35");
+        drawRoundedRectPath(
+          ctx,
+          rolePillX,
+          rolePillY,
+          rolePillW,
+          rolePillH,
+          rolePillH / 2
+        );
+        ctx.fillStyle = roleGrad;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        ctx.lineWidth = 1.5;
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.45)";
+        ctx.stroke();
+
+        ctx.fillStyle = "#041122";
+      } else {
+        drawRoundedRectPath(
+          ctx,
+          rolePillX,
+          rolePillY,
+          rolePillW,
+          rolePillH,
+          rolePillH / 2
+        );
+        ctx.fillStyle = "rgba(4, 17, 34, 0.94)";
+        ctx.fill();
+        ctx.lineWidth = 1.6;
+        ctx.strokeStyle = "rgba(212, 155, 53, 0.65)";
+        ctx.stroke();
+
+        ctx.fillStyle = "#D49B35";
+      }
+
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(roleText, cx, rolePillY + rolePillH / 2 + 1);
+      ctx.restore();
+
+      // Píldora inferior (#DORSAL NOMBRE) en primer plano absoluto
+      if (assignedPlayer) {
+        ctx.save();
+        const numStr = `#${assignedPlayer.number}`;
+        const nameStr = assignedPlayer.name.toUpperCase();
+        ctx.font = `700 18px ${rajdhaniFont}`;
+        const numWidth = ctx.measureText(numStr).width;
+        const spaceWidth = 6;
+        const nameWidth = ctx.measureText(nameStr).width;
+        const contentW = numWidth + spaceWidth + nameWidth;
+        const pillW = Math.max(98, contentW + 24);
+        const pillX = cx - pillW / 2;
+        const pillY = cardY + cardH - 16;
+
+        ctx.shadowColor = "rgba(0, 0, 0, 0.9)";
+        ctx.shadowBlur = 14;
+        ctx.shadowOffsetY = 5;
+        drawRoundedRectPath(ctx, pillX, pillY, pillW, namePillH, 7);
+        ctx.fillStyle = "rgba(4, 17, 34, 0.97)";
+        ctx.fill();
+
+        ctx.shadowBlur = 0;
+        ctx.shadowOffsetY = 0;
+        ctx.lineWidth = 1.8;
+        ctx.strokeStyle = "#D49B35";
+        ctx.stroke();
+
+        ctx.textAlign = "left";
+        ctx.textBaseline = "middle";
+        const textStartX = cx - contentW / 2;
+        const textCenterY = pillY + namePillH / 2 + 1;
+
+        ctx.fillStyle = "#D49B35";
+        ctx.fillText(numStr, textStartX, textCenterY);
+
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillText(nameStr, textStartX + numWidth + spaceWidth, textCenterY);
+        ctx.restore();
+      }
+    }
+
+    ctx.restore(); // Fin del clip del césped
+
+    // ------------------------------------------------------------------------
+    // 4. PIE DEL CARTEL OFICIAL ("DONEC VINCAS")
+    // ------------------------------------------------------------------------
+    const footerTop = H_HEADER + H_PITCH;
+    ctx.fillStyle = "#041122";
+    ctx.fillRect(0, footerTop, W, H_FOOTER);
+
+    ctx.strokeStyle = "rgba(212, 155, 53, 0.55)";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(0, footerTop);
+    ctx.lineTo(W, footerTop);
+    ctx.stroke();
+
+    ctx.save();
+    ctx.textBaseline = "middle";
+    ctx.textAlign = "left";
+    ctx.fillStyle = "rgba(255, 255, 255, 0.72)";
+    ctx.font = `700 22px ${rajdhaniFont}`;
+    ctx.fillText(
+      "ATLÁNTICA F.C.  •  EA SPORTS FC 27",
+      48,
+      footerTop + H_FOOTER / 2
+    );
+
+    ctx.textAlign = "right";
+    ctx.fillStyle = "#D49B35";
+    ctx.shadowColor = "rgba(212, 155, 53, 0.5)";
+    ctx.shadowBlur = 12;
+    ctx.font = `700 28px ${cinzelFont}`;
+    ctx.fillText("DONEC VINCAS", W - 48, footerTop + H_FOOTER / 2);
+    ctx.restore();
+
+    // Marco dorado exterior del cartel completo
+    ctx.save();
+    ctx.strokeStyle = "rgba(212, 155, 53, 0.85)";
+    ctx.lineWidth = 6;
+    ctx.strokeRect(3, 3, W - 6, H - 6);
+    ctx.restore();
+
+    return canvasToPngBlob(canvas);
+  };
+
+  // ==========================================================================
+  // FUNCIÓN AUXILIAR: generateLineupBlob()
+  // Usa el motor nativo de Canvas 2D (con respaldo a toBlob sin cacheBust)
   // ==========================================================================
   const generateLineupBlob = async (): Promise<{
     blob: Blob;
     file: File;
   }> => {
-    if (!posterRef.current) {
-      throw new Error("No se encontró el contenedor del cartel táctico.");
-    }
-
     setSelectedSlotId(null);
     setSelectedBenchPlayerId(null);
-    await new Promise((r) => setTimeout(r, 60));
 
-    const blob = await toBlob(posterRef.current, {
-      pixelRatio: 2,
-      cacheBust: true,
-      backgroundColor: "#041122",
-      filter: (node) => {
-        if (
-          node instanceof HTMLElement &&
-          node.dataset?.exportIgnore === "true"
-        ) {
-          return false;
-        }
-        return true;
-      },
-    });
+    let blob: Blob | null = null;
+
+    try {
+      blob = await renderLineupPosterCanvas();
+    } catch (canvasErr) {
+      console.warn(
+        "Fallback a html-to-image tras error en Canvas 2D:",
+        canvasErr
+      );
+      if (posterRef.current) {
+        blob = await toBlob(posterRef.current, {
+          pixelRatio: 2,
+          cacheBust: false,
+          backgroundColor: "#041122",
+          filter: (node) => {
+            if (
+              node instanceof HTMLElement &&
+              node.dataset?.exportIgnore === "true"
+            ) {
+              return false;
+            }
+            return true;
+          },
+        });
+      }
+    }
 
     if (!blob) {
       throw new Error("No se pudo generar el archivo PNG de la alineación.");
